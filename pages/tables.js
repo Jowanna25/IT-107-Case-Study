@@ -1,9 +1,7 @@
-import { api, escapeHtml, mount, pageHeading, notify, tableName, navigate, routeParams } from '../ui.js';
-
 const statusNames = { available: 'Available', occupied: 'Occupied', reserved: 'Reserved', cleaning: 'Cleaning' };
 const floorNames = { 1: 'First-floor seating', 2: 'Second-floor seating' };
 
-export async function renderTables() {
+async function renderTables() {
   let state = await api('/state');
   let floor = Number(routeParams().get('floor')) === 2 ? 2 : 1;
   let selectedId = null;

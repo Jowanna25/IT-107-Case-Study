@@ -1,6 +1,4 @@
-import { api, escapeHtml, mount, pageHeading, notify, peso, lineTitle, tableName, navigate, routeParams } from '../ui.js';
-
-export async function renderOrder() {
+async function renderOrder() {
   const params = routeParams();
   let tableId = Number(params.get('tableId'));
   let orderId = Number(params.get('orderId'));
@@ -120,7 +118,7 @@ export async function renderOrder() {
       if (quantityButton.dataset.qty === 'up') {
         selections[item.id] = flavorId;
         if (existing) existing.qty += 1;
-        else draft.push({ lineId: crypto.randomUUID(), menuItemId: item.id, menuName: item.name, flavorId: flavorId || null, qty: 1, unitPrice: item.price, prepared: false });
+        else draft.push({ lineId: makeId(), menuItemId: item.id, menuName: item.name, flavorId: flavorId || null, qty: 1, unitPrice: item.price, prepared: false });
       } else if (existing) {
         existing.qty -= 1;
         if (existing.qty <= 0) draft = draft.filter((line) => line !== existing);

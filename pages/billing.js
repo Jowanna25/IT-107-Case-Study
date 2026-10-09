@@ -1,11 +1,9 @@
-import { api, escapeHtml, mount, pageHeading, peso, dateUS, lineTitle, paddedTable, notify, tableName, navigate, routeParams } from '../ui.js';
-
 const readAmount = (value) => {
   const amount = Number(String(value || '').replace(/,/g, '').replace(/[₱\s]/g, ''));
   return Number.isFinite(amount) ? Math.round(amount * 100) / 100 : 0;
 };
 
-export async function renderBilling() {
+async function renderBilling() {
   let state = await api('/state');
   const params = routeParams();
   const linkedTableId = Number(params.get('tableId')) || 0;

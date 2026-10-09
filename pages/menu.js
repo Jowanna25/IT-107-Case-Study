@@ -1,6 +1,4 @@
-import { api, escapeHtml, mount, pageHeading, notify, peso } from '../ui.js';
-
-export async function renderMenu() {
+async function renderMenu() {
   let state = await api('/state');
   let stagedPromos = state.promos.map((promo) => ({ ...promo }));
   let saving = false;

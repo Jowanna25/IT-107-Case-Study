@@ -1,6 +1,4 @@
-import { api, escapeHtml, mount, pageHeading, peso } from '../ui.js';
-
-export async function renderSales() {
+async function renderSales() {
   const report = await api('/reports');
   const actions = '<button class="btn btn-secondary" data-export>♧ Export PDF</button><button class="btn btn-secondary" data-print>▣ Print</button>';
   const header = pageHeading('SALES REPORTS', 'Period: Today', actions);

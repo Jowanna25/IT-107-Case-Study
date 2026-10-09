@@ -8,23 +8,13 @@ Food ordering and table management for Wingsman. A desktop-first restaurant POS 
 
 ## Tech stack
 
-- HTML, CSS, and browser JavaScript modules
-- Node.js 18+ built-in HTTP server (no third-party runtime packages)
-- `data/db.json` as the temporary database
-- One repository module for database reads and serialized, atomic writes
+- HTML, CSS, and browser JavaScript
+- Browser `localStorage` for saved restaurant data
+- No install, server, or network connection required to run the app
 
 ## Run it
 
-Install Node.js 18 or newer, then from this folder run:
-
-```sh
-npm run seed   # reset data/db.json to the sample restaurant data
-npm start      # serve the app at http://localhost:8080
-```
-
-Open `http://localhost:8080/index.html` for the app. All six workflows run inside this one document; the other HTML entry points redirect to its matching in-page route.
-
-To use another port, set `PORT` before starting the server. The server creates a fresh seeded database if `data/db.json` is missing or unreadable. `npm run seed` intentionally replaces the current data.
+Press **F5** in VS Code and choose **Launch Wingsman index.html**, or open `index.html` directly. All six workflows run inside that document. Data is saved automatically in the browser on this computer.
 
 ## Pages
 
@@ -41,24 +31,21 @@ The top navigation switches between all six in-page workflows:
 
 ```text
 index.html             Single document for all six app views
-app.js                 Browser page entry point
+app.js                 Browser page entry point and hash navigation
 ui.js                  Shared browser helpers and navigation
-pages/                 One browser module per page
+data-store.js          Local browser data and workflow operations
+assets/initial-state.js Starting restaurant data, loaded on first run
+pages/                 One classic browser script per workflow
 assets/wingsman-logo.png  Wingsman logo from the supplied design reference
 tokens.css             Shared design tokens
 app.css                Responsive page and print styles
-server.js              Static file server and JSON REST API
-repository.js          Queued JSON reads/writes and atomic replacement
-seed-data.js           Initial menu, tables, promos, and seven days of sales
-seed.js                Database reset script
-data/db.json           Current temporary database and committed sample data
 ```
 
-## JSON data and pricing
+## Data and pricing
 
-The JSON file stores counters, tables, flavors, menu items, promotions, orders, and payments. Order lines keep a menu-name and price snapshot so receipts and historical sales still make sense if a menu item is later changed or removed. Money is stored as whole pesos or rounded to two decimal places.
+Browser storage keeps tables, flavors, menu items, promotions, orders, and payments. Order lines keep a menu-name and price snapshot so receipts and historical sales still make sense if a menu item is later changed or removed. Money is stored as whole pesos or rounded to two decimal places.
 
-Promotion toggles are stored as flags. The `promoRules` function in `server.js` is the single extension point for pricing rules; it currently applies no discount because the designs do not specify one.
+Promotion toggles are stored as flags. They do not change prices because the designs do not specify discount rules.
 
 ## Table and order workflow
 
@@ -77,4 +64,4 @@ Kitchen cards refresh about every five seconds. Editing a ready order sends it b
 
 ## Boundaries
 
-This is a local prototype. It does not add login, a real payment gateway, or a production database. The JSON file is intended for development and can later be replaced behind `repository.js`.
+This is a local prototype. It does not add login, a real payment gateway, or a production database. Saved data stays in the browser profile used to open `index.html`.

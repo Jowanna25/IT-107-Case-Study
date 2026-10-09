@@ -1,40 +1,30 @@
-export const FLAVORS = [
+const FLAVORS = [
   { id: 'honey-garlic', name: 'Honey Garlic' }, { id: 'butter', name: 'Butter' },
   { id: 'garlic', name: 'Garlic' }, { id: 'honey-butter', name: 'Honey Butter' }, { id: 'bbq', name: 'BBQ' }
 ];
 
-export const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
+const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[char]));
-export const peso = (amount) => `₱${Number(amount || 0).toLocaleString('en-PH', { maximumFractionDigits: 2 })}`;
-export const tableName = (id) => `Tbl ${Number(id)}`;
-export const paddedTable = (id) => String(Number(id)).padStart(2, '0');
-export const dateUS = (value = new Date()) => new Date(value).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
-export const time12 = (value) => new Date(value).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+const peso = (amount) => `₱${Number(amount || 0).toLocaleString('en-PH', { maximumFractionDigits: 2 })}`;
+const tableName = (id) => `Tbl ${Number(id)}`;
+const paddedTable = (id) => String(Number(id)).padStart(2, '0');
+const dateUS = (value = new Date()) => new Date(value).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+const time12 = (value) => new Date(value).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 
-export async function api(path, options = {}) {
-  const response = await fetch(`/api${path}`, {
-    ...options,
-    headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }
-  });
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(payload.error || `Request failed (${response.status}).`);
-  return payload;
-}
-
-export function routeParams() {
+function routeParams() {
   const hash = location.hash.slice(1);
   const separator = hash.indexOf('?');
   return new URLSearchParams(separator < 0 ? '' : hash.slice(separator + 1));
 }
 
-export function navigate(page, params = {}) {
+function navigate(page, params = {}) {
   const query = new URLSearchParams(Object.entries(params)
     .filter(([, value]) => value !== undefined && value !== null && value !== '')).toString();
   location.hash = `#${page}${query ? `?${query}` : ''}`;
 }
 
-export function notify(message, kind = 'success') {
+function notify(message, kind = 'success') {
   const host = document.getElementById('toastHost');
   if (!host) return;
   const node = document.createElement('div');
@@ -45,7 +35,7 @@ export function notify(message, kind = 'success') {
   setTimeout(() => node.remove(), 3600);
 }
 
-export function nav(active) {
+function nav(active) {
   const pages = [
     ['#tables', 'Table Management', 'tables'], ['#order', 'Order Taking', 'order'],
     ['#kitchen', 'Kitchen Display', 'kitchen'], ['#billing', 'Billing & Payment', 'billing'],
@@ -55,21 +45,21 @@ export function nav(active) {
     `<a href="${href}"${active === key ? ' class="active" aria-current="page"' : ''}>${label}</a>`).join('')}</nav>`;
 }
 
-export function mount(active, content) {
+function mount(active, content) {
   document.getElementById('siteNav').innerHTML = nav(active);
   document.getElementById('pageContent').innerHTML = content;
 }
 
-export function pageHeading(title, subtitle = '', actions = '') {
+function pageHeading(title, subtitle = '', actions = '') {
   return `<header class="page-heading"><div><h1>${escapeHtml(title)}</h1>${subtitle ? `<p>${escapeHtml(subtitle)}</p>` : ''}</div>${actions ? `<div class="heading-actions">${actions}</div>` : ''}</header>`;
 }
 
-export function pageError(error) {
+function pageError(error) {
   const host = document.getElementById('pageContent');
   host.innerHTML = `<section class="card error-card"><h2>We couldn’t load this page</h2><p>${escapeHtml(error.message || 'Please try again.')}</p><button class="btn btn-secondary" onclick="location.reload()">Retry</button></section>`;
 }
 
-export function lineTitle(item, state) {
+function lineTitle(item, state) {
   const menu = state.menuItems.find((entry) => entry.id === item.menuItemId);
   const flavor = state.flavors.find((entry) => entry.id === item.flavorId);
   const name = item.menuName || menu?.name || 'Menu item';

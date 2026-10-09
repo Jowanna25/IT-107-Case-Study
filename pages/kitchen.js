@@ -1,6 +1,4 @@
-import { api, escapeHtml, lineTitle, mount, pageHeading, peso, paddedTable, notify, tableName } from '../ui.js';
-
-export async function renderKitchen() {
+async function renderKitchen() {
   let state = await api('/state');
   let saving = false;
   const page = document.getElementById('pageContent');
