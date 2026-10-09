@@ -49,8 +49,6 @@ a { color: inherit; }
 .table-page-heading { align-items: center; }
 .table-brand-actions { display: flex; align-items: center; justify-content: flex-end; gap: 20px; }
 .brand-logo { display: block; width: 128px; max-height: 52px; object-fit: contain; }
-.brand-fallback { display: flex; align-items: center; gap: 7px; color: #be242c; font-weight: 800; letter-spacing: -.04em; }
-.brand-emblem { display: grid; width: 30px; height: 30px; place-items: center; border: 2px solid #be242c; border-radius: 50%; font: 800 17px var(--display); }
 .floor-switch { display: flex; gap: 7px; }
 .floor-switch .btn { min-height: 34px; padding: 7px 11px; font-size: 11px; }
 .floor-switch .selected-floor { border-color: #93c5fd; color: var(--blue); background: white; }
@@ -206,7 +204,6 @@ dialog::backdrop { background: rgba(15, 23, 42, .42); backdrop-filter: blur(2px)
   .heading-actions { justify-content: flex-start; }
   .table-brand-actions { width: 100%; justify-content: space-between; gap: 9px; }
   .brand-logo { width: 94px; }
-  .brand-emblem { width: 26px; height: 26px; }
   .table-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
   .seating-panel, .panel, .menu-group, .order-summary, .settings-card, .sales-panel { padding: 15px; }
   .legend { gap: 10px 15px; padding: 11px 12px; }

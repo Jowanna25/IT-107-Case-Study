@@ -44,6 +44,7 @@ index.html             Single document for all six app views
 app.js                 Browser page entry point
 ui.js                  Shared browser helpers and navigation
 pages/                 One browser module per page
+assets/wingsman-logo.png  Wingsman logo from the supplied design reference
 tokens.css             Shared design tokens
 app.css                Responsive page and print styles
 server.js              Static file server and JSON REST API
@@ -71,7 +72,7 @@ Kitchen cards refresh about every five seconds. Editing a ready order sends it b
 - “Mark as Reserved” is available on an available table. A reservation can be released from the table screen.
 - The Flavors chips update the currently focused menu row, and each row only accepts its assigned flavors. Same-item flavor variants are separate order lines.
 - Promo switches stage changes until **Save Changes** is clicked. No discount behavior is assumed.
-- No `assets/wingsman-logo.png` was present in the project, so Table Management shows a Wingsman text mark in its place.
+- Table Management uses the Wingsman logo from the supplied design reference.
 - Google Fonts are used for Inter and Roboto Slab when the browser can reach Google Fonts; local system fonts are fallbacks.
 
 ## Boundaries
