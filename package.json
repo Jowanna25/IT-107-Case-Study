@@ -1,0 +1,8 @@
+{
+  "name": "wingsman-food-table-management",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wingsman restaurant table, order, kitchen, billing, and reporting app",
+  "scripts": { "start": "node server.js", "seed": "node seed.js" },
+  "engines": { "node": ">=18" }
+}

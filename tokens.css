@@ -1,0 +1,23 @@
+:root {
+  color-scheme: light;
+  --page: #f8fafc;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --ink: #172033;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --blue: #2563eb;
+  --blue-dark: #1d4ed8;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --yellow: #eab308;
+  --yellow-bg: #fef3c7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --orange: #f97316;
+  --orange-bg: #ffedd5;
+  --shadow: 0 7px 18px rgba(15, 23, 42, .055);
+  --radius: 16px;
+  --display: "Roboto Slab", Rockwell, Georgia, serif;
+  --body: Inter, "Segoe UI", Arial, sans-serif;
+}
