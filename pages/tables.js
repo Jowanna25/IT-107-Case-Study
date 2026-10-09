@@ -1,11 +1,11 @@
-import { api, escapeHtml, mount, pageHeading, notify, tableName } from '../ui.js';
+import { api, escapeHtml, mount, pageHeading, notify, tableName, navigate, routeParams } from '../ui.js';
 
 const statusNames = { available: 'Available', occupied: 'Occupied', reserved: 'Reserved', cleaning: 'Cleaning' };
 const floorNames = { 1: 'First-floor seating', 2: 'Second-floor seating' };
 
 export async function renderTables() {
   let state = await api('/state');
-  let floor = Number(new URLSearchParams(location.search).get('floor')) === 2 ? 2 : 1;
+  let floor = Number(routeParams().get('floor')) === 2 ? 2 : 1;
   let selectedId = null;
   const brand = '<div class="table-brand-actions"><div class="floor-switch" role="group" aria-label="Choose floor"><button class="btn btn-secondary" data-floor="1">1st Floor</button><button class="btn btn-secondary" data-floor="2">2nd Floor</button></div><div class="brand-fallback"><span class="brand-emblem" aria-hidden="true">W</span>Wingsman</div></div>';
   const legend = '<section class="card legend" aria-label="Table status legend"><span class="legend-item"><i class="legend-dot dot-available"></i>Available</span><span class="legend-item"><i class="legend-dot dot-occupied"></i>Occupied</span><span class="legend-item"><i class="legend-dot dot-reserved"></i>Reserved</span><span class="legend-item"><i class="legend-dot dot-cleaning"></i>Cleaning</span></section>';
@@ -72,11 +72,11 @@ export async function renderTables() {
     try {
       if (actionButton.dataset.action === 'assign') {
         const result = await api('/tables/' + table.id + '/assign', { method: 'POST', body: '{}' });
-        location.href = 'order.html?tableId=' + table.id + '&orderId=' + result.order.id;
+        navigate('order', { tableId: table.id, orderId: result.order.id });
         return;
       }
       if (actionButton.dataset.action === 'continue') {
-        location.href = 'order.html?tableId=' + table.id + '&orderId=' + table.currentOrderId;
+        navigate('order', { tableId: table.id, orderId: table.currentOrderId });
         return;
       }
       if (actionButton.dataset.action === 'reserve') {

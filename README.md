@@ -22,11 +22,13 @@ npm run seed   # reset data/db.json to the sample restaurant data
 npm start      # serve the app at http://localhost:8080
 ```
 
+Open `http://localhost:8080/index.html` for the app. All six workflows run inside this one document; the other HTML entry points redirect to its matching in-page route.
+
 To use another port, set `PORT` before starting the server. The server creates a fresh seeded database if `data/db.json` is missing or unreadable. `npm run seed` intentionally replaces the current data.
 
 ## Pages
 
-The top navigation links to all six workflows:
+The top navigation switches between all six in-page workflows:
 
 1. **Table Management** — floor seating, table assignment, reservations, and release.
 2. **Order Taking** — menu selection, flavors, quantities, notes, and kitchen submission.
@@ -38,6 +40,7 @@ The top navigation links to all six workflows:
 ## Project layout
 
 ```text
+index.html             Single document for all six app views
 app.js                 Browser page entry point
 ui.js                  Shared browser helpers and navigation
 pages/                 One browser module per page
@@ -64,7 +67,7 @@ Kitchen cards refresh about every five seconds. Editing a ready order sends it b
 
 ## UI assumptions
 
-- The navigation follows the six requested pages and uses the existing `tables.html`, `order.html`, `kitchen.htm`, `billing.html`, and `sales.html` routes; `menu.html` is new.
+- The navigation follows the six requested workflows inside `index.html`. Earlier page URLs redirect to the corresponding in-page route.
 - “Mark as Reserved” is available on an available table. A reservation can be released from the table screen.
 - The Flavors chips update the currently focused menu row, and each row only accepts its assigned flavors. Same-item flavor variants are separate order lines.
 - Promo switches stage changes until **Save Changes** is clicked. No discount behavior is assumed.

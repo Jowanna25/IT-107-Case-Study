@@ -1,4 +1,4 @@
-import { api, escapeHtml, mount, pageHeading, peso, dateUS, lineTitle, paddedTable, notify, tableName } from '../ui.js';
+import { api, escapeHtml, mount, pageHeading, peso, dateUS, lineTitle, paddedTable, notify, tableName, navigate, routeParams } from '../ui.js';
 
 const readAmount = (value) => {
   const amount = Number(String(value || '').replace(/,/g, '').replace(/[₱\s]/g, ''));
@@ -7,7 +7,7 @@ const readAmount = (value) => {
 
 export async function renderBilling() {
   let state = await api('/state');
-  const params = new URLSearchParams(location.search);
+  const params = routeParams();
   const linkedTableId = Number(params.get('tableId')) || 0;
   const linkedTableOrder = state.tables.find((table) => table.id === linkedTableId)?.currentOrderId || 0;
   let selectedId = Number(params.get('orderId')) || linkedTableOrder;
@@ -27,7 +27,7 @@ export async function renderBilling() {
     const selector = '<select class="form-control order-select" id="orderSelect" aria-label="Choose a ready order"><option value="">Choose a ready order</option>' + options + '</select>';
     let content = pageHeading('BILLING & PAYMENT', '', selector);
     if (paidOrder) {
-      content += '<section class="card empty-state"><h2>Payment complete</h2><p>Order #' + paidOrder.id + ' for ' + escapeHtml(tableName(paidOrder.tableId)) + ' is paid. The table is now marked for cleaning.</p><div class="btn-row" style="justify-content:center;margin-top:16px"><a class="btn btn-primary" href="tables.html?floor=' + (paidOrder.tableId <= 4 ? 1 : 2) + '">Return to Table Management</a></div></section>';
+      content += '<section class="card empty-state"><h2>Payment complete</h2><p>Order #' + paidOrder.id + ' for ' + escapeHtml(tableName(paidOrder.tableId)) + ' is paid. The table is now marked for cleaning.</p><div class="btn-row" style="justify-content:center;margin-top:16px"><a class="btn btn-primary" href="#tables?floor=' + (paidOrder.tableId <= 4 ? 1 : 2) + '">Return to Table Management</a></div></section>';
       page.innerHTML = content;
       return;
     }
@@ -47,8 +47,7 @@ export async function renderBilling() {
     page.innerHTML = content;
     document.getElementById('orderSelect').addEventListener('change', (event) => {
       selectedId = Number(event.target.value) || 0;
-      history.replaceState(null, '', selectedId ? 'billing.html?orderId=' + selectedId : 'billing.html');
-      render();
+      navigate('billing', selectedId ? { orderId: selectedId } : {});
     });
     const received = document.getElementById('amountReceived');
     received.addEventListener('input', () => {

@@ -1,8 +1,20 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=tables.html"><title>Wingsman POS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f9fc">
+  <title>Wingsman POS</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="app.css">
+  <script type="module" src="app.js"></script>
 </head>
-<body><p>Opening <a href="tables.html">Wingsman Table Management</a>…</p></body>
+<body data-page="tables">
+  <div class="app-shell">
+    <div id="siteNav"></div>
+    <main id="pageContent" class="page-content"><div class="loading-card">Loading Wingsman…</div></main>
+  </div>
+  <div id="printArea" class="print-receipt"></div>
+  <div id="toastHost" class="toast-host" aria-live="polite"></div>
+</body>
 </html>

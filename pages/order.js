@@ -1,26 +1,26 @@
-import { api, escapeHtml, mount, pageHeading, notify, peso, lineTitle, tableName } from '../ui.js';
+import { api, escapeHtml, mount, pageHeading, notify, peso, lineTitle, tableName, navigate, routeParams } from '../ui.js';
 
 export async function renderOrder() {
-  const params = new URLSearchParams(location.search);
+  const params = routeParams();
   let tableId = Number(params.get('tableId'));
   let orderId = Number(params.get('orderId'));
   if (!tableId) {
     sessionStorage.setItem('wingsmanMessage', 'Select or assign a table before taking an order.');
-    location.replace('tables.html');
+    navigate('tables');
     return;
   }
   let state = await api('/state');
   const table = state.tables.find((entry) => entry.id === tableId);
   if (!table) {
     sessionStorage.setItem('wingsmanMessage', 'The selected table is no longer available.');
-    location.replace('tables.html');
+    navigate('tables');
     return;
   }
   if (!orderId) orderId = table.currentOrderId;
   let order = state.orders.find((entry) => entry.id === orderId && entry.tableId === tableId);
   if (!order) {
     sessionStorage.setItem('wingsmanMessage', 'Assign this table before starting an order.');
-    location.replace('tables.html');
+    navigate('tables');
     return;
   }
   let draft = order.items.map((item) => ({ ...item }));

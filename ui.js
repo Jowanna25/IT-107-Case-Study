@@ -22,6 +22,18 @@ export async function api(path, options = {}) {
   return payload;
 }
 
+export function routeParams() {
+  const hash = location.hash.slice(1);
+  const separator = hash.indexOf('?');
+  return new URLSearchParams(separator < 0 ? '' : hash.slice(separator + 1));
+}
+
+export function navigate(page, params = {}) {
+  const query = new URLSearchParams(Object.entries(params)
+    .filter(([, value]) => value !== undefined && value !== null && value !== '')).toString();
+  location.hash = `#${page}${query ? `?${query}` : ''}`;
+}
+
 export function notify(message, kind = 'success') {
   const host = document.getElementById('toastHost');
   if (!host) return;
@@ -35,9 +47,9 @@ export function notify(message, kind = 'success') {
 
 export function nav(active) {
   const pages = [
-    ['tables.html', 'Table Management', 'tables'], ['order.html', 'Order Taking', 'order'],
-    ['kitchen.htm', 'Kitchen Display', 'kitchen'], ['billing.html', 'Billing & Payment', 'billing'],
-    ['menu.html', 'Menu & Promo Settings', 'menu'], ['sales.html', 'Sales Reports', 'sales']
+    ['#tables', 'Table Management', 'tables'], ['#order', 'Order Taking', 'order'],
+    ['#kitchen', 'Kitchen Display', 'kitchen'], ['#billing', 'Billing & Payment', 'billing'],
+    ['#menu', 'Menu & Promo Settings', 'menu'], ['#sales', 'Sales Reports', 'sales']
   ];
   return `<nav class="nav" aria-label="Main navigation">${pages.map(([href, label, key]) =>
     `<a href="${href}"${active === key ? ' class="active" aria-current="page"' : ''}>${label}</a>`).join('')}</nav>`;

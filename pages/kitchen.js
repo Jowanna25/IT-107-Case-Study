@@ -26,7 +26,7 @@ export async function renderKitchen() {
       }).join('');
       const actions = order.status === 'preparing'
         ? '<button class="btn btn-primary" data-done="' + order.id + '"' + (allPrepared && !saving ? '' : ' disabled') + '>DONE</button><button class="btn btn-danger" data-cancel="' + order.id + '"' + (saving ? ' disabled' : '') + '>CANCEL ORDER</button>'
-        : '<a class="btn btn-primary" href="billing.html?orderId=' + order.id + '">Bill Order</a><button class="btn btn-danger" data-cancel="' + order.id + '"' + (saving ? ' disabled' : '') + '>CANCEL ORDER</button>';
+        : '<a class="btn btn-primary" href="#billing?orderId=' + order.id + '">Bill Order</a><button class="btn btn-danger" data-cancel="' + order.id + '"' + (saving ? ' disabled' : '') + '>CANCEL ORDER</button>';
       return '<article class="card kitchen-card"><div class="kitchen-card-heading"><h2>' + escapeHtml(tableName(order.tableId)) + ' · Order #' + order.id + '</h2><span class="status-pill ' + statusClass(order.status) + '">Table ' + paddedTable(order.tableId) + ' · ' + (order.status === 'ready' ? 'Ready to bill' : 'Preparing') + '</span></div><h3 class="section-title">Order Items</h3><div class="kitchen-items">' + items + '</div><div class="note-row"><span class="muted">Note:</span><span>' + escapeHtml(order.note || '—') + '</span></div><div class="kitchen-total"><span>SUBTOTAL:</span><span>' + peso(order.subtotal) + '</span></div><div class="kitchen-actions">' + actions + '</div></article>';
     }).join('');
   };
@@ -81,5 +81,8 @@ export async function renderKitchen() {
     catch (error) { notify(error.message, 'error'); }
   };
   render();
-  window.setInterval(refresh, 5000);
+  const refreshTimer = window.setInterval(() => {
+    if (!page.isConnected) { window.clearInterval(refreshTimer); return; }
+    refresh();
+  }, 5000);
 }
